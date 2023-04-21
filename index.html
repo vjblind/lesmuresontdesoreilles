@@ -14,7 +14,8 @@
   ================================================== -->
   <meta charset="utf-8">
   <title>Les mures on des oreilles</title>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/processing.js/1.6.0/processing.min.js"></script>
+   
   <!-- Mobile Specific Metas
   ================================================== -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -398,6 +399,22 @@ Si vous êtes intéressé par cette technique de mémorisation et que vous souha
     <div class="row">
       <div class="col-12 text-center">
         <h2 class="section-title text-white mb-5">Démo</h2>
+        <div id="myCanvas"></div>
+  <script type="text/javascript">
+    var canvas = document.getElementById("myCanvas");
+    var processing = new Processing(canvas, sketch);
+
+    function sketch(p) {
+      p.setup = function() {
+        p.size(400, 400);
+      }
+
+      p.draw = function() {
+        p.background(255, 255, 255);
+        p.ellipse(p.width/2, p.height/2, 50, 50);
+      }
+    }
+  </script>
       </div>
       <div class="col-lg-10 mx-auto testimonial-slider">
         <!-- slider-item
