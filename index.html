@@ -14,7 +14,6 @@
   ================================================== -->
   <meta charset="utf-8">
   <title>Les mures on des oreilles</title>
- <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.151.3/three.min.js"></script-->
 
   <!-- Mobile Specific Metas
   ================================================== -->
@@ -42,6 +41,16 @@
   <link href="css/style.css" rel="stylesheet">
 
 </head>
+<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+
+<script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@<151>/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@<version>/examples/jsm/"
+    }
+  }
+</script>
  		<script type="module" src="js/main.js"></script>
 <body>
 
