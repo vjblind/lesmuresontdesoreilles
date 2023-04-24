@@ -15,8 +15,6 @@
   <meta charset="utf-8">
   <title>Les mures on des oreilles</title>
 
-  <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js"></script>
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js"></script-->
@@ -44,84 +42,18 @@
 
   <!-- Main Stylesheet -->
   <link href="css/style.css" rel="stylesheet">
+  <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
 
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@<r151>/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@<version>/examples/jsm/"
+      }
+    }
+  </script>
 </head>
-<script type="text/javascript">
-const minNote = 250;
-const maxNote = 500;
-const minSpeed = 2;
-const maxSpeed = 8;
-const margin = 25;
-
-let monoSynth;
-let note;
-let speed;
-
-let prevNote;
-let prevSpeed;
-
-function  setup(){
-var canvas = createCanvas(windowWidth, 400);
-  canvas.parent('sketch-holder');
-
-  monoSynth = new p5.MonoSynth();
-
-  note = random(minNote, maxNote);
-  speed = random(minSpeed, maxSpeed);
-  prevNote = note;
-  prevSpeed = speed;
-
-  strokeWeight(4);
-
-
-}
-
-function  draw(){
-background(50);
-ellipse(mouseX, mouseY, 50, 50);
-const frameDivider = floor(60 / speed);
-
-  if (frameCount % frameDivider == 0) {
-    playSynth();
-  }
-}
-
-function playSynth() {
-  userStartAudio();
-
-  note += random([-10, 0, 10]);
-  note = constrain(note, minNote, maxNote);
-
-  speed += random([-.1, 0, .1]);
-  speed = constrain(speed, minSpeed, maxSpeed);
-
-  const velocity = 1;
-  const time = 0;
-  const duration = 1 / speed;
-
-  monoSynth.play(note, velocity, time, duration);
-
-  const prevSpeedX = map(prevSpeed,
-    minSpeed, maxSpeed,
-    margin, width - margin);
-  const prevNoteY = map(prevNote,
-    minNote, maxNote,
-    height - margin, margin);
-  const speedX = map(speed,
-    minSpeed, maxSpeed,
-    margin, width - margin);
-  const noteY = map(note,
-    minNote, maxNote,
-    height - margin, margin);
-
-  stroke(random(200, 255));
-  line(prevSpeedX, prevNoteY, speedX, noteY);
-  prevNote = note;
-  prevSpeed = speed;
-}
-new p5(null, document.getElementById('sketch'));
-</script>
-<canvas id="sketch"></canvas>
+ 		<script type="module" src="js/main.js"></script>
 <body>
 
 
@@ -216,9 +148,7 @@ Avec cette application, vous pouvez créer votre propre palais mental sonore en 
 L'application est facile à utiliser et peut être personnalisée en fonction de vos besoins spécifiques. Elle peut être utile pour les étudiants qui ont besoin de mémoriser de grandes quantités d'informations, ainsi que pour les professionnels qui souhaitent se souvenir des noms et des visages de leurs clients.
 
 Si vous êtes intéressé par cette technique de mémorisation et que vous souhaitez améliorer votre mémoire auditive, essayez cette application de palais mental sonore dès maintenant !
-
-
-          "</p>
+ "</p>
         <a href="about.html" class="btn btn-transparent">know more</a>
       </div>
     </div>
@@ -542,6 +472,7 @@ Si vous êtes intéressé par cette technique de mémorisation et que vous souha
 <div id="sketch-holder">
       <!-- Our sketch will go here! -->
     </div>
+
 
 <!-- /testimonial -->
 
