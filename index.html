@@ -41,8 +41,7 @@
   <link href="css/style.css" rel="stylesheet">
 
 </head>
-<script  src="https://cdn.skypack.dev/pin/three@v0.132.2-dLPTyDAYt6rc6aB18fLm/mode=imports/optimized/three.js"></script>
-    <script type="module" src="./js/main.js"></script>
+
 <body>
 
 
@@ -459,8 +458,8 @@ Si vous êtes intéressé par cette technique de mémorisation et que vous souha
   <img src="images/illustrations/leaf-cyan.png" alt="bg-shape" class="img-fluid bg-shape-5">
 </section>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/OrbitControls.min.js"></script>
+<script src="./build/three.min.js"></script>
+  <script src="./jsm/controls/OrbitControls.js"></script>
 
 
  <script>
@@ -478,8 +477,8 @@ Si vous êtes intéressé par cette technique de mémorisation et que vous souha
    camera.position.z = 5;
 
    var controls = new THREE.OrbitControls(camera, renderer.domElement);
-    controls.update();
-    
+      controls.update();
+
    // Add a white grid for the ground
       var grid = new THREE.GridHelper(10, 10, 0xffffff, 0xffffff);
       grid.position.y = -2;
