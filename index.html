@@ -459,7 +459,7 @@ Si vous êtes intéressé par cette technique de mémorisation et que vous souha
 </section>
 
 <script src="./build/three.min.js"></script>
-  <script src="./jsm/controls/OrbitControls.js"></script>
+  <script type="module" src="./jsm/controls/OrbitControls.js"></script>
 
 
  <script>
@@ -474,10 +474,13 @@ Si vous êtes intéressé par cette technique de mémorisation et que vous souha
    var cube = new THREE.Mesh(geometry, material);
    scene.add(cube);
 
-   camera.position.z = 5;
 
-   var controls = new THREE.OrbitControls(camera, renderer.domElement);
-      controls.update();
+   const controls = new OrbitControls( camera, renderer.domElement );
+
+   //controls.update() must be called after any manual changes to the camera's transform
+    camera.position.z = 5;
+   controls.update();
+
 
    // Add a white grid for the ground
       var grid = new THREE.GridHelper(10, 10, 0xffffff, 0xffffff);
