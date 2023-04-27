@@ -43,8 +43,7 @@
   <script type="importmap">
     {
       "imports": {
-        "three": "https://unpkg.com/three@0.151.3/build/three.module.js",
-        "three/addons/": "https://unpkg.com/three@0.151.3/examples/jsm/"
+        "three": "https://unpkg.com/three@0.151.3/build/three.module.js"
       }
     }
   </script>
@@ -486,7 +485,7 @@ Si vous êtes intéressé par cette technique de mémorisation et que vous souha
            renderer.setSize(window.innerWidth, window.innerHeight)
            document.body.appendChild(renderer.domElement)
 
-           
+
            const geometry = new THREE.BoxGeometry()
 
            const material = new THREE.MeshNormalMaterial({ wireframe: true })
