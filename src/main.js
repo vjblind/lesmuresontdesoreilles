@@ -2,6 +2,7 @@ import {
   BoxBufferGeometry,
   Color,
   Mesh,
+   GridHelper,
   MeshBasicMaterial,
   PerspectiveCamera,
   Scene,
@@ -40,6 +41,43 @@ const cube = new Mesh(geometry, material);
 
 // add the mesh to the scene
 scene.add(cube);
+// create a white grid
+const size = 100;
+const divisions = 10;
+const gridHelper = new GridHelper(size, divisions);
+gridHelper.material.opacity = 0.25;
+gridHelper.material.transparent = true;
+scene.add(gridHelper);
+
+
+
+
+// create UI button
+ const button = document.createElement("button");
+ button.textContent = "Animate Cube";
+ button.addEventListener("click", () => {
+   // create a new material with a random color
+     const newMaterial = new MeshBasicMaterial({ color: Math.random() * 0xffffff });
+
+     // create a new cube with the new material
+     const newCube = new Mesh(geometry, newMaterial);
+
+     // set the position of the new cube randomly within the grid
+     const gridSize = size / divisions;
+     newCube.position.set(
+       (Math.random() - 0.5) * size,
+       (Math.random() - 0.5) * size,
+       (Math.random() - 0.5) * size
+     );
+     newCube.position.divideScalar(gridSize).round().multiplyScalar(gridSize);
+
+     // add the new cube to the scene
+     scene.add(newCube);
+ });
+ container.append(button);
+
+
+
 
 // create the renderer
 const renderer = new WebGLRenderer();
@@ -67,6 +105,8 @@ function updateCubePosition() {
   cube.position.set(Math.sin(angle), 0, Math.cos(angle));
   timeElapsed += 0.01;
 }
+
+
 
 // define a function to render the scene
 function render() {
