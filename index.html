@@ -471,7 +471,6 @@ Si vous êtes intéressé par cette technique de mémorisation et que vous souha
 
 <script type="module">
            import * as THREE from 'three'
-           import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
            const scene = new THREE.Scene()
 
@@ -487,8 +486,7 @@ Si vous êtes intéressé par cette technique de mémorisation et que vous souha
            renderer.setSize(window.innerWidth, window.innerHeight)
            document.body.appendChild(renderer.domElement)
 
-           const controls = new OrbitControls(camera, renderer.domElement)
-
+           
            const geometry = new THREE.BoxGeometry()
 
            const material = new THREE.MeshNormalMaterial({ wireframe: true })
@@ -507,7 +505,7 @@ Si vous êtes intéressé par cette technique de mémorisation et que vous souha
                requestAnimationFrame(animate)
                cube.rotation.x = cube.rotation.y += 0.01
 
-               controls.update()
+
                renderer.render(scene, camera)
            }
            animate()
