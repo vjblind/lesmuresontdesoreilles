@@ -7,24 +7,30 @@ import {
   PerspectiveCamera,
   Scene,
   WebGLRenderer,
+  AudioListener,
+  Audio,
+  AudioLoader,
+  AudioAnalyser,
 } from "https://cdn.skypack.dev/three@0.132.2";
 
 import { OrbitControls } from "https://cdn.skypack.dev/three@0.132.2/examples/jsm/controls/OrbitControls.js";
+import { PositionalAudio } from "https://cdn.skypack.dev/three@0.132.2/examples/jsm/audio/PositionalAudio.js";
+
 
 // Get a reference to the container element that will hold our scene
 const container = document.querySelector("#scene-container");
-
+			let analyser1, analyser2, analyser3;
 // create a Scene
 const scene = new Scene();
 
 // Set the background color
 scene.background = new Color("skyblue");
-
+const hh= 500;
 // Create a camera
 const fov = 35; // AKA Field of View
-const aspect = container.clientWidth / container.clientHeight;
+const aspect = container.clientWidth / hh;
 const near = 0.1; // the near clipping plane
-const far = 100; // the far clipping plane
+const far = 9100; // the far clipping plane
 
 const camera = new PerspectiveCamera(fov, aspect, near, far);
 // move the camera back so we can view the scene
@@ -39,8 +45,12 @@ const material = new MeshBasicMaterial();
 // create a Mesh containing the geometry and material
 const cube = new Mesh(geometry, material);
 
+ 
 // add the mesh to the scene
 scene.add(cube);
+
+
+
 // create a white grid
 const size = 100;
 const divisions = 10;
@@ -61,6 +71,15 @@ scene.add(gridHelper);
 
      // create a new cube with the new material
      const newCube = new Mesh(geometry, newMaterial);
+  // create a PositionalAudio with an oscillator and set it as the source
+  const sound3 = new PositionalAudio(listener);
+  const oscillator3 = listener.context.createOscillator();
+  oscillator3.type = 'sine';
+  oscillator3.frequency.setValueAtTime(144, sound3.context.currentTime);
+  oscillator3.start(0);
+
+  camera.add(listener);
+
 
      // set the position of the new cube randomly within the grid
      const gridSize = size / divisions;
@@ -83,7 +102,7 @@ scene.add(gridHelper);
 const renderer = new WebGLRenderer();
 
 // next, set the renderer to the same size as our container element
-renderer.setSize(container.clientWidth, container.clientHeight);
+renderer.setSize(container.clientWidth, hh);
 
 // finally, set the pixel ratio so that our scene will look good on HiDPI displays
 renderer.setPixelRatio(window.devicePixelRatio);
