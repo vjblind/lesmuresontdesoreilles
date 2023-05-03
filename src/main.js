@@ -11,12 +11,23 @@ import {
   Audio,
   AudioLoader,
   AudioAnalyser,
+  PositionalAudio,
 } from "https://cdn.skypack.dev/three@0.132.2";
 
 import { OrbitControls } from "https://cdn.skypack.dev/three@0.132.2/examples/jsm/controls/OrbitControls.js";
-import { PositionalAudio } from "https://cdn.skypack.dev/three@0.132.2/examples/jsm/audio/PositionalAudio.js";
+//import { PositionalAudio } from "https://unpkg.com/browse/@types/three@0.140.0/src/audio/PositionalAudio.d.ts";
+ 
 
+// create an AudioContext
+const context = new AudioContext();
 
+// create a user gesture event listener
+document.addEventListener('click', () => {
+  // resume the audio context
+  context.resume().then(() => {
+    console.log('Audio context resumed successfully');
+  });
+});
 // Get a reference to the container element that will hold our scene
 const container = document.querySelector("#scene-container");
 			let analyser1, analyser2, analyser3;
@@ -50,11 +61,17 @@ const cube = new Mesh(geometry, material);
 // add the mesh to the scene
 scene.add(cube);
 
+ 
 
+// create an AudioListener and add it to the camera
+ 
+
+
+ 
 
 // create a white grid
-const size = 100;
-const divisions = 10;
+const size = 500;
+const divisions = 20;
 const gridHelper = new GridHelper(size, divisions);
 gridHelper.material.opacity = 0.25;
 gridHelper.material.transparent = true;
@@ -72,27 +89,32 @@ scene.add(gridHelper);
 
      // create a new cube with the new material
      const newCube = new Mesh(geometry, newMaterial);
-  // create a PositionalAudio with an oscillator and set it as the source
-  const sound3 = new PositionalAudio(listener);
-  const oscillator3 = listener.context.createOscillator();
-  oscillator3.type = 'sine';
-  oscillator3.frequency.setValueAtTime(144, sound3.context.currentTime);
-  oscillator3.start(0);
-
-  camera.add(listener);
+ 
 
 
      // set the position of the new cube randomly within the grid
-     const gridSize = size / divisions;
+     const gridSize = (size/3) / divisions;
      newCube.position.set(
        (Math.random() - 0.5) * size,
        (Math.random() - 0.5) * size,
        (Math.random() - 0.5) * size
      );
      newCube.position.divideScalar(gridSize).round().multiplyScalar(gridSize);
-
+     const listener = new AudioListener();
+     camera.add( listener );
+ 
+ 
+   
+   const sound1 = new PositionalAudio( listener );
+   const songElement = document.getElementById( 'song' );
+   sound1.setMediaElementSource( songElement );
+   sound1.setRefDistance( 2 );
+   sound1.setVolume(2.5);
+   songElement.loop= true ;
+   songElement.play();
      // add the new cube to the scene
      scene.add(newCube);
+   newCube.add( sound1 );
  });
  container.append(button);
 
