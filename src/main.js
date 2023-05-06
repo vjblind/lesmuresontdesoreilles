@@ -65,7 +65,14 @@ scene.add(cube);
 
 // create an AudioListener and add it to the camera
  
+const startButton1 = document.getElementById( 'startButton1' );
+startButton1.addEventListener( 'click', init1 );
 
+function init1() {
+
+  const overlay1 = document.getElementById( 'overlay1' );
+ overlay1.remove();
+}
 
  
 
@@ -81,42 +88,53 @@ scene.add(gridHelper);
 
 
 // create UI button
- const button = document.createElement("button");
- button.textContent = "Animate Cube";
- button.addEventListener("click", () => {
-   // create a new material with a random color
-     const newMaterial = new MeshBasicMaterial({ color: Math.random() * 0xffffff });
+ //const button = document.createElement("button");
 
-     // create a new cube with the new material
-     const newCube = new Mesh(geometry, newMaterial);
- 
+ const startButton = document.getElementById('startButton');
+startButton.addEventListener('click', init);
 
+function init() {
+  const overlay = document.getElementById('overlay');
+  //  overlay.remove();
 
-     // set the position of the new cube randomly within the grid
-     const gridSize = (size/3) / divisions;
-     newCube.position.set(
-       (Math.random() - 0.5) * size,
-       (Math.random() - 0.5) * size,
-       (Math.random() - 0.5) * size
-     );
-     newCube.position.divideScalar(gridSize).round().multiplyScalar(gridSize);
-     const listener = new AudioListener();
-     camera.add( listener );
- 
- 
-   
-   const sound1 = new PositionalAudio( listener );
-   const songElement = document.getElementById( 'song' );
-   sound1.setMediaElementSource( songElement );
-   sound1.setRefDistance( 2 );
-   sound1.setVolume(2.5);
-   songElement.loop= true ;
-   songElement.play();
-     // add the new cube to the scene
-     scene.add(newCube);
-   newCube.add( sound1 );
- });
- container.append(button);
+  // create a new material with a random color
+  const newMaterial = new MeshBasicMaterial({ color: Math.random() * 0xffffff });
+
+  // create a new cube with the new material
+  const newCube = new Mesh(geometry, newMaterial);
+
+  // set the position of the new cube randomly within the grid
+  const gridSize = (size / 3) / divisions;
+  newCube.position.set(
+    (Math.random() - 0.5) * size,
+    (Math.random() - 0.5) * size,
+    (Math.random() - 0.5) * size
+  );
+  newCube.position.divideScalar(gridSize).round().multiplyScalar(gridSize);
+
+  // create a new audio listener
+  const listener = new AudioListener();
+  camera.add(listener);
+
+  // create a new audio source for the cube
+  const sound = new PositionalAudio(listener);
+
+  // load the audio file and set it as the audio source's buffer
+  const audioLoader = new AudioLoader();
+  audioLoader.load('8.mp3', (buffer) => {
+    sound.setBuffer(buffer);
+    sound.setLoop(true);
+    sound.setRefDistance(2);
+    sound.setVolume(2.5);
+    sound.play();
+  });
+
+  // add the new cube and its audio source to the scene
+  newCube.add(sound);
+  scene.add(newCube);
+}
+
+ //container.append(button);
 
 
 
