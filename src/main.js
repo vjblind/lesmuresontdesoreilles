@@ -92,10 +92,11 @@ scene.add(gridHelper);
 
  const startButton = document.getElementById('startButton');
 startButton.addEventListener('click', init);
-
+const limit= 0;
 function init() {
   const overlay = document.getElementById('overlay');
-  //  overlay.remove();
+  limit++;
+  if (limit>5)  overlay.remove();
 
   // create a new material with a random color
   const newMaterial = new MeshBasicMaterial({ color: Math.random() * 0xffffff });
@@ -104,7 +105,7 @@ function init() {
   const newCube = new Mesh(geometry, newMaterial);
 
   // set the position of the new cube randomly within the grid
-  const gridSize = (size / 3) / divisions;
+  const gridSize = (size / 10) / divisions;
   newCube.position.set(
     (Math.random() - 0.5) * size,
     (Math.random() - 0.5) * size,
