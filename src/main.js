@@ -96,7 +96,7 @@ let limit= 0;
 function init() {
   const overlay = document.getElementById('overlay');
   limit++;
-  if (limit>5)  overlay.remove();
+  //if (limit>5)  overlay.remove();
 
   // create a new material with a random color
   const newMaterial = new MeshBasicMaterial({ color: Math.random() * 0xffffff });
