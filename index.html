@@ -40,7 +40,7 @@
   <!-- Main Stylesheet -->
   <link href="css/style.css" rel="stylesheet">
   <script async src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"></script>
-  <script type="module" src="./src/main.js"></script>
+
 
 </head>
 
@@ -68,12 +68,14 @@
         <li class="nav-item">
           <a class="nav-link" href= "https://mailchi.mp/47ec26eed796/lesmuresontdesoreilles" >inscription</a>
         </li>
-      <!--  <li class="nav-item">
-          <a class="nav-link" href="portfolio.html">Portfolio</a>
-        </li>-->
+      <li class="nav-item">
+          <a class="nav-link" href="records.html">records</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="contact.html">Contact</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="blog.html">records</a>
       </ul>
     </div>
   </nav>
@@ -464,14 +466,101 @@ Si vous êtes intéressé par cette technique de mémorisation et que vous souha
 
 <!--script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script-->
 <div id="overlay1">
-  <button id="startButton1">start</button>
+  <button id="startButton">start</button>
+
 </div>
 
 
-<div id="overlay">
-  <button id="startButton">Play1</button>
+<!--div id="overlay">
+  <button id="startButton0">Play1</button>
+</div-->
+
+
+
+<sdiv>
+  <button class="recordButton">Record 1</button>
+  <button class="stopButton" disabled>Stop 1</button>
+  <button id="startButton1", class="playButton">Play 1</button>
+</div>
+<div>
+  <button class="recordButton">Record 2</button>
+  <button class="stopButton" disabled>Stop 2</button>
+  <button id="startButton2", class="playButton">Play 2</button>
+</div>
+<div>
+  <button class="recordButton">Record 3</button>
+  <button class="stopButton" disabled>Stop 3</button>
+  <button id="startButton3", class="playButton">Play 3</button>
 </div>
 
+<div>
+  <button class="recordButton">Record 4</button>
+  <button class="stopButton" disabled>Stop 4</button>
+  <button  id="startButton4", class="playButton">Play 4</button>
+</div>
+<div>
+  <button class="recordButton">Record 5</button>
+  <button class="stopButton" disabled>Stop 5</button>
+  <button id="startButton5", class="playButton">Play 5</button>
+</div>
+ 
+
+<button id="recordButton">Record</button>
+<button id="playerButton">player</button>
+<div id="audioContainer"></div>
+ 
+<script type="module" src="./src/main.js"></script>
+<!--button onclick="document.getElementById('myAudio').play()">Play Sound</button-->
+
+
+<!--script>
+  const mediaRecorders = {};
+  const recordedChunks = {};
+  const recordButtons = document.querySelectorAll('.recordButton');
+  const stopButtons = document.querySelectorAll('.stopButton');
+  const playButtons = document.querySelectorAll('.playButton');
+
+  recordButtons.forEach((recordButton, i) => {
+    recordButton.addEventListener('click', () => startRecording(i + 1));
+    stopButtons[i].addEventListener('click', () => stopRecording(i + 1));
+    playButtons[i].addEventListener('click', () => playRecording(i + 1));
+  });
+
+  async function startRecording(recordingNum) {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      recordButtons[recordingNum - 1].disabled = true;
+      stopButtons[recordingNum - 1].disabled = false;
+      playButtons[recordingNum - 1].disabled = true;
+      recordedChunks[recordingNum] = [];
+      mediaRecorders[recordingNum] = new MediaRecorder(stream, {
+        mimeType: 'audio/webm;codecs=opus'
+      });
+      mediaRecorders[recordingNum].addEventListener('dataavailable', (event) => handleDataAvailable(event, recordingNum));
+      mediaRecorders[recordingNum].start();
+    } catch (e) {
+      console.error('Failed to record', e);
+    }
+  }
+
+  function handleDataAvailable(event, recordingNum) {
+    recordedChunks[recordingNum].push(event.data);
+  }
+
+  function stopRecording(recordingNum) {
+    recordButtons[recordingNum - 1].disabled = false;
+    stopButtons[recordingNum - 1].disabled = true;
+    playButtons[recordingNum - 1].disabled = false;
+    mediaRecorders[recordingNum].stop();
+  }
+
+  function playRecording(recordingNum) {
+    const blob = new Blob(recordedChunks[recordingNum], { type: 'audio/webm' });
+    const url = URL.createObjectURL(blob);
+    const audio = new Audio(url);
+    audio.play(); 
+  }
+</script-->
 <div id="scene-container">
     <!-- Our <canvas> will be inserted here -->
 

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Recording Demo</title>
+</head>
+<body>
+	<h1>Recording Demo</h1>
+	<div>
+		<button class="recordButton">Record 1</button>
+		<button class="stopButton" disabled>Stop 1</button>
+		<button class="playButton">Play 1</button>
+	</div>
+	<div>
+		<button class="recordButton">Record 2</button>
+		<button class="stopButton" disabled>Stop 2</button>
+		<button class="playButton">Play 2</button>
+	</div>
+	<div>
+		<button class="recordButton">Record 3</button>
+		<button class="stopButton" disabled>Stop 3</button>
+		<button class="playButton">Play 3</button>
+	</div>
+	<script>
+		const mediaRecorders = {};
+		const recordedChunks = {};
+		const recordButtons = document.querySelectorAll('.recordButton');
+		const stopButtons = document.querySelectorAll('.stopButton');
+		const playButtons = document.querySelectorAll('.playButton');
+
+		recordButtons.forEach((recordButton, i) => {
+			recordButton.addEventListener('click', () => startRecording(i + 1));
+			stopButtons[i].addEventListener('click', () => stopRecording(i + 1));
+			playButtons[i].addEventListener('click', () => playRecording(i + 1));
+		});
+
+		async function startRecording(recordingNum) {
+			try {
+				const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+				recordButtons[recordingNum - 1].disabled = true;
+				stopButtons[recordingNum - 1].disabled = false;
+				playButtons[recordingNum - 1].disabled = true;
+				recordedChunks[recordingNum] = [];
+				mediaRecorders[recordingNum] = new MediaRecorder(stream, {
+					mimeType: 'audio/webm;codecs=opus'
+				});
+				mediaRecorders[recordingNum].addEventListener('dataavailable', (event) => handleDataAvailable(event, recordingNum));
+				mediaRecorders[recordingNum].start();
+			} catch (e) {
+				console.error('Failed to record', e);
+			}
+		}
+
+		function handleDataAvailable(event, recordingNum) {
+			recordedChunks[recordingNum].push(event.data);
+		}
+
+		function stopRecording(recordingNum) {
+			recordButtons[recordingNum - 1].disabled = false;
+			stopButtons[recordingNum - 1].disabled = true;
+			playButtons[recordingNum - 1].disabled = false;
+			mediaRecorders[recordingNum].stop();
+		}
+
+		function playRecording(recordingNum) {
+			const blob = new Blob(recordedChunks[recordingNum], { type: 'audio/webm' });
+			const url = URL.createObjectURL(blob);
+			const audio = new Audio(url);
+			audio.play();
+		}
+	</script>
+</body>
+</html>
